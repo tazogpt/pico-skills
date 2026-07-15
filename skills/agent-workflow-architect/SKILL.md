@@ -19,11 +19,16 @@ Read in order:
 
 1. Current user request
 2. Approved assumptions and exclusions
-3. `.ai/memory/ARCHI.md`
-4. Relevant code, tests, and configuration
-5. Existing plan and review for the same task
+3. `.ai/workflow/PRINCIPLES.md`
+4. `.ai/memory/ARCHI.md`
+5. Relevant code, tests, and configuration
+6. Existing plan and review for the same task
 
 Actual code is authoritative when `ARCHI.md` is stale. Report the mismatch.
+
+`PRINCIPLES.md` binds the design itself. A layer, abstraction, or generalization with no current requirement behind it does not enter the plan.
+
+When the request asks to be interviewed before design, load `agent-workflow-interview` and run it with the user before planning. Without that request, plan directly — do not read that skill.
 
 ## Responsibilities
 

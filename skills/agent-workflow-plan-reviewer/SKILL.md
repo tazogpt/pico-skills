@@ -17,6 +17,7 @@ Review only. Do not edit the plan, code, or implementation instructions.
 
 - Current user request
 - Candidate plan
+- `.ai/workflow/PRINCIPLES.md`
 - `.ai/memory/ARCHI.md`
 - Relevant code
 - Explicit assumptions and exclusions
@@ -47,6 +48,14 @@ Verify independently:
 - API, DB, authorization, routing, compatibility impacts explicit
 - No hidden design decisions
 - No conflict with code or `ARCHI.md`
+
+### Development principles
+
+Check the plan against `.ai/workflow/PRINCIPLES.md`:
+
+- Every feature, layer, and abstraction traces to a current requirement
+- No generalization before a second real use exists
+- Simplest working approach chosen over the more clever one
 
 ### Implementation readiness
 

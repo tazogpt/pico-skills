@@ -92,13 +92,12 @@ Automatically:
 
 1. Parse the five assignments.
 2. Select the repository-local communication adapter.
-3. Discover current endpoints.
-4. Map each role to an agent and endpoint.
-5. Persist assignment and state.
-6. Return `WORKFLOW_READY`.
-7. Wait for the actual task.
+3. Resolve each assigned name to an endpoint with `IDENTIFY`. Tab labels are the only source. Never infer a mapping from the CLI in the pane, the model in the status line, or by elimination — report `WORKFLOW_BLOCKED` and ask instead.
+4. Persist assignment and state.
+5. Report `WORKFLOW_READY` as the role table defined in `BOOTSTRAP.md`, and nothing else.
+6. Wait for the actual task.
 
-Activate a role only when its state needs it, by sending the `ROLE_ACTIVATE` envelope defined in the communication protocol. Collect that role's `ROLE_READY` as the stage-entry gate; preparation itself confirms only the orchestrator.
+Activate a role only when its state needs it, by sending the `ROLE_ACTIVATE` envelope defined in the communication protocol. That envelope carries the role name only — the receiving agent derives its skill path from the role, and you collect its `ROLE_READY` with `READ`. Use that as the stage-entry gate; preparation itself confirms only the orchestrator.
 
 When one agent holds multiple roles, record all assignments but load one active role at a time.
 

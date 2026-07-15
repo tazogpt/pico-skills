@@ -63,6 +63,7 @@ install:
   ${WORKFLOW_DIR}/BOOTSTRAP.md
 create if absent:
   ${WORKFLOW_DIR}/CONFIG.md
+  ${WORKFLOW_DIR}/PRINCIPLES.md
   ${WORKFLOW_DIR}/STATE.md
   ${MEMORY_DIR}/ARCHI.md
 patch managed bootstrap block:
@@ -99,6 +100,7 @@ replace_tree "${SOURCE_ROOT}/communication" "${WORKFLOW_DIR}/communication"
 cp "${SOURCE_ROOT}/templates/BOOTSTRAP.md" "${WORKFLOW_DIR}/BOOTSTRAP.md"
 
 install_if_absent "${SOURCE_ROOT}/templates/CONFIG.md" "${WORKFLOW_DIR}/CONFIG.md"
+install_if_absent "${SOURCE_ROOT}/templates/PRINCIPLES.md" "${WORKFLOW_DIR}/PRINCIPLES.md"
 install_if_absent "${SOURCE_ROOT}/templates/STATE.md" "${WORKFLOW_DIR}/STATE.md"
 install_if_absent "${SOURCE_ROOT}/templates/ARCHI.md" "${MEMORY_DIR}/ARCHI.md"
 

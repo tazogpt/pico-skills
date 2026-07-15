@@ -14,6 +14,7 @@ required_roles=(
 
 required_support=(
   agent-workflow-tdd
+  agent-workflow-interview
 )
 
 failed=0
@@ -61,6 +62,7 @@ done
 for file in \
   templates/BOOTSTRAP.md \
   templates/CONFIG.md \
+  templates/PRINCIPLES.md \
   templates/STATE.md \
   templates/ARCHI.md \
   communication/protocol.md \
@@ -91,6 +93,7 @@ printf '# Existing\n' > "${tmp}/CLAUDE.md"
 for file in \
   .ai/workflow/BOOTSTRAP.md \
   .ai/workflow/CONFIG.md \
+  .ai/workflow/PRINCIPLES.md \
   .ai/workflow/STATE.md \
   .ai/memory/ARCHI.md \
   .ai/workflow/skills/agent-workflow-orchestrator/SKILL.md \
@@ -107,6 +110,7 @@ grep -Fq '<!-- agent-workflow-bootstrap:start -->' "${tmp}/CLAUDE.md"
 
 printf '\nPROJECT-SPECIFIC\n' >> "${tmp}/.ai/memory/ARCHI.md"
 printf '\nPROJECT-STATE\n' >> "${tmp}/.ai/workflow/STATE.md"
+printf '\nPROJECT-PRINCIPLE\n' >> "${tmp}/.ai/workflow/PRINCIPLES.md"
 
 (
   cd "${tmp}"
@@ -115,6 +119,7 @@ printf '\nPROJECT-STATE\n' >> "${tmp}/.ai/workflow/STATE.md"
 
 grep -Fq 'PROJECT-SPECIFIC' "${tmp}/.ai/memory/ARCHI.md"
 grep -Fq 'PROJECT-STATE' "${tmp}/.ai/workflow/STATE.md"
+grep -Fq 'PROJECT-PRINCIPLE' "${tmp}/.ai/workflow/PRINCIPLES.md"
 
 (
   cd "${tmp}"
@@ -126,8 +131,9 @@ grep -Fq 'PROJECT-STATE' "${tmp}/.ai/workflow/STATE.md"
 [[ ! -e "${tmp}/.ai/workflow/BOOTSTRAP.md" ]]
 [[ -f "${tmp}/.ai/memory/ARCHI.md" ]]
 [[ -f "${tmp}/.ai/workflow/CONFIG.md" ]]
+[[ -f "${tmp}/.ai/workflow/PRINCIPLES.md" ]]
 [[ -f "${tmp}/.ai/workflow/STATE.md" ]]
 ! grep -Fq '<!-- agent-workflow-bootstrap:start -->' "${tmp}/AGENTS.md"
 ! grep -Fq '<!-- agent-workflow-bootstrap:start -->' "${tmp}/CLAUDE.md"
 
-echo "validation passed: 5 roles, 1 TDD support, repository-local installation"
+echo "validation passed: 5 roles, 2 support skills, repository-local installation"

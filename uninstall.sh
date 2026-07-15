@@ -42,4 +42,4 @@ for raw in sys.argv[1:]:
 PY
 
 echo "removed managed workflow files and bootstrap blocks"
-echo "preserved CONFIG.md, STATE.md, and ARCHI.md"
+echo "preserved CONFIG.md, PRINCIPLES.md, STATE.md, and ARCHI.md"

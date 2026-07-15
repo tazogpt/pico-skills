@@ -2,12 +2,28 @@
 
 ## IDENTIFY
 
+window 이름이 herdr 탭 라벨에 대응하는 유일한 출처다.
+
 ```bash
-tmux list-panes -a \
-  -F '#{session_name}:#{window_index}.#{pane_index} #{pane_id} #{pane_current_command} #{pane_title}'
+tmux list-windows -a -F '#{session_name}:#{window_index} #{window_name}'
+tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index} #{pane_id}'
 ```
 
-현재 세션마다 다시 매핑한다.
+1. `window_name`을 배정 이름과 대조해 window를 정한다.
+2. 그 window의 pane을 모은다.
+3. 정확히 1개일 때만 그 pane target을 endpoint로 기록한다. 2개 이상이면 `WORKFLOW_BLOCKED`를 보고하고 어느 pane인지 사용자에게 묻는다.
+
+이름은 window에 붙고 pane에는 붙지 않는다. window가 분할돼 있으면 이름만으로 대상이 정해지지 않으며, 아무거나 고르면 다른 에이전트에게 `SEND`나 `RESET`이 간다.
+
+`pane_current_command`는 CLI 종류까지만 알려주므로 매핑에 쓰지 않는다.
+
+이름이 배정과 맞지 않으면 사용자에게 정리를 요청한다.
+
+```bash
+tmux rename-window -t <target> <name>
+```
+
+현재 세션마다, 그리고 RESET 후에 다시 매핑한다.
 
 ## SEND
 

@@ -31,11 +31,12 @@ If the plan changed after PASS, stop for re-review.
 ## Start checks
 
 1. Read the complete approved plan.
-2. Read `.ai/memory/ARCHI.md`.
-3. Confirm the plan still matches code.
-4. Check `git status`.
-5. Preserve unrelated user changes.
-6. Confirm TDD-selected scopes.
+2. Read `.ai/workflow/PRINCIPLES.md`.
+3. Read `.ai/memory/ARCHI.md`.
+4. Confirm the plan still matches code.
+5. Check `git status`.
+6. Preserve unrelated user changes.
+7. Confirm TDD-selected scopes.
 
 Stop when implementation requires a new decision affecting:
 
@@ -55,6 +56,8 @@ Stop when implementation requires a new decision affecting:
 - Keep changes minimal
 - Resolve only low-risk local details
 - Do not modify unapproved files without architect approval
+
+Write the code according to `.ai/workflow/PRINCIPLES.md`. The user reads this diff, so readability outranks brevity and cleverness. Do not add an abstraction the plan did not call for, and do not factor out duplication that has not actually repeated yet.
 
 When `TDD_APPLICABLE`:
 

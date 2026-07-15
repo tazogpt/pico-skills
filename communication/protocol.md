@@ -12,6 +12,20 @@ WAIT_FOR(role, expected_status)
 RESET(role)
 ```
 
+## IDENTIFY
+
+배정 이름을 endpoint로 해석한다. 어댑터의 **탭 라벨이 유일한 출처다.**
+
+pane에서 실행 중인 CLI 종류와 상태줄의 모델명은 라우팅에 쓰지 않는다. 참고 정보일 뿐이다. 같은 CLI가 같은 모델로 여러 pane에서 돌 수 있으므로 구분 기준이 되지 못한다. 모델이나 CLI를 바꿔도 라벨이 유지되면 워크플로는 그대로 동작한다.
+
+1. 어댑터로 탭 라벨과 endpoint 목록을 읽는다.
+2. 배정 이름을 라벨과 대조한다. 한글과 영문, 부분 이름의 대응은 에이전트가 판단한다. `프로`와 `opencode-pro`, `코덱스솔`과 `sol`은 같은 대상이다.
+3. 하나로 확정되지 않으면 `WORKFLOW_BLOCKED`를 보고하고 사용자에게 묻는다. 추측이나 소거법으로 채우지 않는다.
+
+각 역할의 식별 근거는 `label <라벨>`로 기록한다.
+
+세션마다, 그리고 RESET 후에 다시 실행한다.
+
 ## Message
 
 ```text
@@ -49,27 +63,25 @@ RETURN_TO
 ```text
 워크플로워 ROLE_ACTIVATE
 
-TASK_ID
-- id
-
 ROLE
 - 이 에이전트가 맡을 단일 역할
-
-ASSIGNMENT
-- orchestrator: <agent> (<endpoint>)
-- architect: <agent> (<endpoint>)
-- plan reviewer: <agent> (<endpoint>)
-- implementer: <agent> (<endpoint>)
-- implementation reviewer: <agent> (<endpoint>)
-
-SKILL
-- 읽어야 할 스킬 파일 경로
-
-RETURN_TO
-- orchestrator endpoint
 ```
 
-수신 에이전트는 ROLE의 스킬만 읽고 `ROLE_READY`를 RETURN_TO로 반환한다. 5개 역할 배정 파싱은 하지 않는다.
+역할명 외에는 보내지 않는다.
+
+- 스킬 경로는 역할명에서 결정된다. 공백을 `-`로 바꿔 `.ai/workflow/skills/agent-workflow-<role>/SKILL.md`가 된다. `plan reviewer`는 `agent-workflow-plan-reviewer`다.
+- 반환 주소는 필요 없다. 오케스트레이터가 `READ`로 회수한다.
+- `TASK_ID`와 작업 내용은 이후 `MESSAGE`로 전달한다. 활성화는 역할 진입까지만 담당한다.
+- 5개 역할 배정표는 수신 에이전트가 쓰지 않는다. 라우팅은 오케스트레이터만 한다.
+
+수신 에이전트는 ROLE의 스킬만 읽고 자신의 pane에 `ROLE_READY`를 출력한다.
+
+```text
+ROLE_READY
+
+ROLE
+- <assigned role>
+```
 
 ## RESET
 

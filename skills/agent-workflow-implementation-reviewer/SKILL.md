@@ -21,6 +21,7 @@ Review only. Do not modify code or directly instruct the implementer.
 - Implementation report
 - Validation evidence
 - TDD assessment and evidence when selected
+- `.ai/workflow/PRINCIPLES.md`
 - `.ai/memory/ARCHI.md`
 - Relevant code
 
@@ -50,6 +51,18 @@ Confirm the reviewed diff matches the report.
 - API, DB, authorization, routing, compatibility
 - Existing repository patterns
 - Structural changes missing from `ARCHI.md`
+
+### Development principles
+
+Check the diff against `.ai/workflow/PRINCIPLES.md`:
+
+- Readable on first pass by the user, not only by its author
+- No abstraction, layer, or generalization the plan did not call for
+- No factoring out of duplication that has not actually repeated
+- Long methods, deep nesting, and dense one-liners split into readable units
+- Structure carries the intent, rather than a comment explaining complexity
+
+Report these as `NOTE` unless the plan explicitly required otherwise.
 
 ### Security and regression
 
