@@ -2,7 +2,7 @@
 
 Orca 앱이 관리하는 터미널로 역할을 연결한다. 명령은 실제 Orca CLI로 검증된 것만 기록한다.
 
-Orca가 Windows이고 저장소가 WSL이면 먼저 `scripts/install-orca-wsl-cli.sh`로 WSL `orca` 명령을 설치한다.
+Windows Orca와 WSL 조합에서는 `Path`/`PATH` 중복 및 UNC 현재 디렉터리 문제가 발생할 수 있다. 사용 전에 `orca-ide status --json`과 현재 worktree 선택이 정상 동작하는지 확인한다. 이 저장소는 별도 CLI 우회 설치 스크립트를 제공하지 않는다.
 
 ## IDENTIFY
 
