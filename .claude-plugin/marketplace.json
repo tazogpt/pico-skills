@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "pico-skills",
+  "description": "herdr pane 위에서 도는 다중 에이전트 워크플로우 스킬.",
+  "owner": {
+    "name": "routine"
+  },
+  "plugins": [
+    {
+      "name": "pico-skills",
+      "description": "아키텍트/플랜리뷰어/임플리먼터/구현리뷰어 4역할 워크플로우. 라우팅과 금지 하네스만.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
