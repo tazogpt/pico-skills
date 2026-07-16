@@ -18,11 +18,12 @@ Produce an implementation-ready plan. Do not implement production code.
 Read in order:
 
 1. Current user request
-2. Approved assumptions and exclusions
-3. `.ai/workflow/PRINCIPLES.md`
-4. `.ai/memory/ARCHI.md`
-5. Relevant code, tests, and configuration
-6. Existing plan and review for the same task
+2. Current task `MESSAGE`, including `TASK_ID` and `RETURN_TO`
+3. Approved assumptions and exclusions
+4. `.ai/workflow/PRINCIPLES.md`
+5. `.ai/memory/ARCHI.md`
+6. Relevant code, tests, and configuration
+7. Existing plan and review for the same task
 
 Actual code is authoritative when `ARCHI.md` is stale. Report the mismatch.
 
@@ -90,6 +91,10 @@ Required sections:
 ```
 
 Do not put production implementation code in the plan.
+
+## Report delivery
+
+Read the selected communication adapter from `.ai/workflow/STATE.md`. Use the exact status and all fields from each terminal block below to construct a protocol `MESSAGE`, then `SEND` it to the current task's `RETURN_TO` endpoint. The report must arrive as a new input in the counterpart pane. Printing it only in this pane does not return it.
 
 ## Plan output
 

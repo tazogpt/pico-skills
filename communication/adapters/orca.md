@@ -29,6 +29,14 @@ orca terminal send --terminal <handle> --text "<message>" --enter --json
 
 JSON 응답의 `ok: true`로 제출을 확인한다. 긴 내용은 파일로 저장하고 경로만 보낸다.
 
+작업 지시는 역할 terminal로 보내고, 역할의 상태 보고는 받은 `MESSAGE`의 `RETURN_TO` handle로 보낸다.
+
+```bash
+orca terminal send --terminal <return_to_handle> --text "<status MESSAGE>" --enter --json
+```
+
+이 명령이 상대 terminal에 새 입력을 제출해 다음 turn을 시작한다. 상태를 자기 terminal에 출력하는 것만으로는 반환되지 않는다.
+
 ## READ
 
 ```bash
@@ -39,21 +47,9 @@ orca terminal read --terminal <handle> --json
 
 ## WAIT_FOR
 
-수신 에이전트가 직접 명령을 실행할 수 있으므로 화면 폴링보다 orchestration 메시지를 우선한다.
+정상 경로에서는 보고 역할이 `RETURN_TO` terminal에 상태 `MESSAGE`를 push하므로, 수신 에이전트가 새 입력으로 상태를 받는다.
 
-보고 측(각 역할)은 상태 반환 시 함께 실행한다.
-
-```bash
-orca orchestration send --to <orchestrator_handle> --subject "<STATUS>" --body "<artifact path>" --json
-```
-
-대기 측(오케스트레이터):
-
-```bash
-orca orchestration check --wait --timeout-ms <n> --json
-```
-
-orchestration을 쓸 수 없으면 `READ`를 폴링해 정확한 상태 문자열을 확인한다.
+예상한 보고가 도착하지 않았을 때만 `READ`로 역할 terminal을 확인한다. polling과 orchestration inbox는 누락 복구용 선택적 제어기에만 사용한다.
 
 ## RESET
 

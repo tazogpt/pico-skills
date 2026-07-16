@@ -5,11 +5,11 @@
 역할은 다음 논리 연산만 사용한다.
 
 ```text
-IDENTIFY(role)
-SEND(role, message)
-READ(role)
-WAIT_FOR(role, expected_status)
-RESET(role)
+IDENTIFY(assigned_name)
+SEND(endpoint, message)
+READ(endpoint)
+WAIT_FOR(endpoint, expected_status)
+RESET(endpoint)
 ```
 
 ## IDENTIFY
@@ -53,8 +53,26 @@ OPEN
 - blockers
 
 RETURN_TO
-- orchestrator endpoint
+- 이 메시지에 대한 응답을 받을 endpoint
 ```
+
+## Status delivery
+
+역할의 작업이 끝나거나 사용자 결정을 기다리게 되면, 상태 보고를 현재 작업 `MESSAGE`의 `RETURN_TO` endpoint로 `SEND`한다. 보고는 상대 pane에 새 입력으로 제출되어 상대 에이전트를 깨워야 한다.
+
+```text
+SEND(RETURN_TO, MESSAGE with exact STATUS)
+```
+
+- `PLAN_READY`, 리뷰 verdict, TDD 결과, `IMPLEMENTATION_COMPLETE`, `ARCHITECT_ACCEPTED`, `*_BLOCKED`를 모두 같은 방식으로 보낸다.
+- 자기 pane에 상태를 출력하는 것만으로는 반환이 아니다. 필요하면 로컬 기록을 남길 수 있지만 상대 pane 전송을 대신하지 못한다.
+- 보고 역할은 `.ai/workflow/STATE.md`의 `communication_adapter`를 읽고 해당 어댑터의 `SEND` 절차로 `RETURN_TO` endpoint에 제출한다.
+- 보고 `MESSAGE`는 원래 `TASK_ID`, 보고 역할 `FROM`, 수신 역할 `TO`, 정확한 `STATUS`, 산출물과 요약을 유지한다. 역할 스킬의 상태별 출력 필드도 생략하지 않는다.
+- 보고 `MESSAGE`의 `RETURN_TO`에는 이후 응답을 받을 보고 역할의 endpoint를 넣는다.
+- 수신 측은 새 입력의 `TASK_ID`, `FROM`, `TO`, `STATUS`를 현재 상태와 대조한 뒤 전이한다.
+- `READ`는 전송 누락을 복구할 때만 사용한다. 정상 완료 경로를 화면 polling에 의존하지 않는다.
+
+`ROLE_READY`만 예외다. 활성화 봉투에는 `RETURN_TO`가 없고 즉시 끝나는 확인이므로 오케스트레이터가 대상 pane을 `READ`해 회수한다.
 
 ## Role activation
 
@@ -127,6 +145,6 @@ docs/tasks/<task-id>/
 
 ## Adapter rule
 
-새 통신 도구는 네 논리 연산과 상태 문자열을 그대로 지원한다.
+새 통신 도구는 다섯 논리 연산과 상태 문자열을 그대로 지원한다.
 
 도구별 제출 예외, Enter 처리, polling, timeout은 어댑터나 선택적 제어기에만 둔다.

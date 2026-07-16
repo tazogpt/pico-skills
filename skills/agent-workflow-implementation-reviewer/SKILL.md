@@ -16,6 +16,7 @@ Review only. Do not modify code or directly instruct the implementer.
 ## Inputs
 
 - User request
+- Current task `MESSAGE`, including `TASK_ID` and `RETURN_TO`
 - Approved plan and PASS
 - Current diff or commit range
 - Implementation report
@@ -104,6 +105,10 @@ Each blocker or required finding includes:
 3. Failure scenario or violated requirement
 4. Required outcome
 5. Test expectation when relevant
+
+## Report delivery
+
+Read the selected communication adapter from `.ai/workflow/STATE.md`. Use the exact status and all fields from each verdict block below to construct a protocol `MESSAGE`, then `SEND` it to the current task's `RETURN_TO` endpoint. The verdict must arrive as a new input in the counterpart pane. Printing it only in this pane does not return it.
 
 ## PASS
 

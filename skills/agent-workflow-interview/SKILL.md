@@ -23,7 +23,7 @@ Applies to that request only. It does not carry into the next task. When the nex
 
 Every reply during an interview is a status envelope plus a body.
 
-The envelope is required. The orchestrator reads it to know whether you are waiting or done, so a reply without it strands the workflow:
+The envelope is required. Send the envelope and body to the current task's `RETURN_TO` pane; leaving them only in the architect pane strands the workflow. The pushed input lets the orchestrator present the architect's question without choosing or rewriting it:
 
 ```text
 ARCHITECT_BLOCKED

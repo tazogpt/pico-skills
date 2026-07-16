@@ -28,9 +28,11 @@ tmux rename-window -t <target> <name>
 ## SEND
 
 ```bash
-tmux send-keys -t <target> -l -- "<message>"
-tmux send-keys -t <target> Enter
+tmux send-keys -t <target_pane> -l -- "<message>"
+tmux send-keys -t <target_pane> Enter
 ```
+
+작업 지시는 역할 pane으로 보내고, 역할의 상태 보고는 받은 `MESSAGE`의 `RETURN_TO` pane으로 보낸다. 상태를 자기 pane에 출력하는 것만으로는 반환되지 않는다.
 
 ## READ
 
@@ -40,9 +42,9 @@ tmux capture-pane -p -t <target> -S -200
 
 ## WAIT_FOR
 
-캡처 결과에서 정확한 상태 문자열을 확인한다.
+정상 경로에서는 보고 역할이 `RETURN_TO` pane에 상태 `MESSAGE`를 push하므로, 수신 에이전트가 새 입력으로 상태를 받는다.
 
-polling, timeout, 중복 응답 방지는 선택적 제어기에 둔다.
+예상한 보고가 도착하지 않았을 때만 역할 pane을 캡처해 정확한 상태 문자열을 복구한다. polling, timeout, 중복 응답 방지는 선택적 제어기에 둔다.
 
 ## RESET
 

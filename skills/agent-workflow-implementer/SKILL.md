@@ -94,6 +94,10 @@ Do not use `git add -A`.
 
 Commit and push only on explicit user request.
 
+## Report delivery
+
+Read the selected communication adapter from `.ai/workflow/STATE.md`. Use the exact status and all fields from the completion or blocked block below to construct a protocol `MESSAGE`, then `SEND` it to the current task's `RETURN_TO` endpoint. The report must arrive as a new input in the counterpart pane. Printing it only in this pane does not return it.
+
 ## Completion
 
 ```text

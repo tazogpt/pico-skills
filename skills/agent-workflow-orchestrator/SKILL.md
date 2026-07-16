@@ -101,6 +101,8 @@ Activate a role only when its state needs it, by sending the `ROLE_ACTIVATE` env
 
 When one agent holds multiple roles, record all assignments but load one active role at a time.
 
+Send every task as the protocol `MESSAGE` with this orchestrator pane as `RETURN_TO`. A role returns its terminal status by sending a new status `MESSAGE` to that endpoint. Handle the pushed input after validating `TASK_ID`, `FROM`, `TO`, and exact `STATUS`; do not depend on polling the role pane for normal completion. Use `READ` only to recover a missing report.
+
 ## Planning gate
 
 Activate the architect and send the user request.

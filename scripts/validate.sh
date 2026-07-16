@@ -76,6 +76,37 @@ do
   }
 done
 
+for name in \
+  agent-workflow-architect \
+  agent-workflow-plan-reviewer \
+  agent-workflow-implementer \
+  agent-workflow-implementation-reviewer
+do
+  grep -Fq 'Printing it only in this pane does not return it.' \
+    "${SKILLS}/${name}/SKILL.md" || {
+    echo "FAIL: ${name} does not require counterpart-pane report delivery"
+    failed=1
+  }
+done
+
+grep -Fq 'herdr pane run <return_to_pane_id> "<status MESSAGE>"' \
+  "${ROOT}/communication/adapters/herdr.md" || {
+  echo "FAIL: herdr adapter does not push status to RETURN_TO pane"
+  failed=1
+}
+
+grep -Fq 'RETURN_TO` pane으로 보낸다' \
+  "${ROOT}/communication/adapters/tmux.md" || {
+  echo "FAIL: tmux adapter does not push status to RETURN_TO pane"
+  failed=1
+}
+
+grep -Fq 'orca terminal send --terminal <return_to_handle>' \
+  "${ROOT}/communication/adapters/orca.md" || {
+  echo "FAIL: Orca adapter does not push status to RETURN_TO terminal"
+  failed=1
+}
+
 [[ "${failed}" -eq 0 ]] || exit 1
 
 tmp="$(mktemp -d)"

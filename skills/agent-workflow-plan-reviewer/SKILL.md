@@ -16,6 +16,7 @@ Review only. Do not edit the plan, code, or implementation instructions.
 ## Inputs
 
 - Current user request
+- Current task `MESSAGE`, including `TASK_ID` and `RETURN_TO`
 - Candidate plan
 - `.ai/workflow/PRINCIPLES.md`
 - `.ai/memory/ARCHI.md`
@@ -78,6 +79,10 @@ Check the plan against `.ai/workflow/PRINCIPLES.md`:
 - `NOTE`: optional
 
 Style preferences are not required findings.
+
+## Report delivery
+
+Read the selected communication adapter from `.ai/workflow/STATE.md`. Use the exact status and all fields from each verdict block below to construct a protocol `MESSAGE`, then `SEND` it to the current task's `RETURN_TO` endpoint. The verdict must arrive as a new input in the counterpart pane. Printing it only in this pane does not return it.
 
 ## PASS
 
